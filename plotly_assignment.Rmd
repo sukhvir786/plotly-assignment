@@ -1,0 +1,91 @@
+---
+title: "plotly"
+author: "Sukhvir"
+date: "August 21, 2020"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+R Markdown & Plotly
+
+```{r plotly}
+library(plotly)
+library(tidyr)
+library(dplyr)
+library(data.table)
+dat <- data.table(mtcars, keep.rownames = TRUE)
+dat[rn %like% "^M"]
+```
+
+## Distribution of Cars by Mileage
+
+```{r}
+library(ggplot2)
+ggplot(mtcars, aes(mpg)) +
+  geom_histogram(binwidth = 4) + xlab('Miles per Gallon') + ylab('Number of Cars') + 
+   ggtitle('Distribution of Cars by Mileage')
+```
+
+## Distribution of Cars by Cylinders
+
+```{r}
+ggplot(mtcars, aes(cyl)) +
+  geom_histogram(binwidth=1) + xlab('Cylinders') + ylab('Number of Cars') +
+   ggtitle('Distribution of Cars by Cylinders')
+```
+
+## Distribution of Cars by Horsepower
+
+```{r}
+ggplot(mtcars, aes(hp)) +
+  geom_histogram(binwidth=20) + xlab('horsepower') + ylab('Number of Cars') +
+  ggtitle('Distribution of Cars by Horsepower')
+```
+
+## correlation of hp and mpg
+
+```{r}
+cor(mtcars$mpg, mtcars$hp)
+```
+
+## Plotting the data - HP vs MPG
+
+```{r}
+ggplot(mtcars, aes(hp, mpg)) + geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  ylab("Miles per Gallon") +
+  xlab("No. of Horsepower") +
+  ggtitle("Impact of Number of Horsepower on MPG")
+
+```
+
+## Impact of Number of Horsepower on MPG
+
+```{r}
+ggplot(mtcars, aes(hp, mpg)) +
+  stat_smooth() + geom_point() +
+  ylab("Miles per Gallon") +
+  xlab ("No. of Horsepower") +
+  ggtitle("Impact of Number of Horsepower on MPG")
+
+```
+
+## Impact of Number of Cylinders on MPG
+
+```{r}
+ggplot(mtcars, aes(cyl, mpg)) + geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  ylab("Miles per Gallon") + xlab("No. of Cylinders") +
+  ggtitle("Impact of Number of Cylinders on MPG")
+```
+
+## Result
+The analysis indicates a strong negative correlation for both number of horsepower (-0.77) as well as number of cylinders (-0.85) on miles per gallon.
